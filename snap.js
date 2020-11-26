@@ -39,6 +39,11 @@ function getCallSite() {
     return callSite;
 }
 
+function jsonify(path) {
+    const file = path.split('.')
+    return `${file.splice(0, file.length - 1).join('.')}.json`
+}
+
 function getStackFileName() {
     const callSite = getCallSite();
     const lineNum = callSite.getLineNumber();
@@ -46,7 +51,7 @@ function getStackFileName() {
     const filePath = callSite.getFileName();
     
     const lineNumber = `${lineNum}:${colNum}`;
-    const fullPath = path.resolve(filePath).replace('.js', '.json')
+    const fullPath = jsonify(path.resolve(filePath))
 
     const folderPath = fullPath.split('/')
     const folder = folderPath.slice(0, folderPath.length - 1).join('/');
