@@ -18,7 +18,6 @@
   },
   "homepage": "https://github.com/tool3/snaptdout#readme",
   "devDependencies": {
-    "chai": "^4.2.0",
     "mocha": "^8.2.1"
   }
 }

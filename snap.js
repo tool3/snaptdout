@@ -75,15 +75,15 @@ async function snap(value) {
     const splittedValue = value.split('\n')
     const {writePath, folder, lineNumber} = getStackFileName();
     const existingSnap = await snapShotFileExists(writePath)
-    const snap = existingSnap || {};
-    if (snap[lineNumber]) {
-        return await validateSnapshot(splittedValue, snap[lineNumber]); 
+    const snapshot = existingSnap || {};
+    if (snapshot[lineNumber]) {
+        return await validateSnapshot(splittedValue, snapshot[lineNumber]); 
     } else {
-        snap[lineNumber] = splittedValue;
+        snapshot[lineNumber] = splittedValue;
     }
     
     await makeFolder(folder);
-    await writeJson(writePath, snap)
+    await writeJson(writePath, snapshot)
 }
 
 module.exports = snap;

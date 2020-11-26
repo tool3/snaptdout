@@ -1,5 +1,5 @@
 # snaptdout
-
+![![](https://github.com/tool3/snaptdout/workflows/test/badge.svg?branch=master)](https://github.com/tool3/snaptdout/actions?query=workflow:test)    
 simple stdout snapshot testing
 
 # install
