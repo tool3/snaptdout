@@ -1,0 +1,14 @@
+name: test
+
+on: [push]
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+      with:
+        github_token: ${{ secrets.GP_TOKEN }}
+      run: yarn && yarn test
+
+
