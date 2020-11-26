@@ -3,12 +3,13 @@ name: test
 on: [push]
 
 jobs:
-  bump:
+  test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-      with:
-        github_token: ${{ secrets.GP_TOKEN }}
-      run: yarn && yarn test
-
-
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - run: |
+          yarn
+          yarn test
