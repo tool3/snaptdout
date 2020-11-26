@@ -80,15 +80,16 @@ async function writeJson(path, json) {
     await fs.writeFile(path, JSON.stringify(json, null, 2));
 }
 
-async function snap(value) {
+async function snap(value, name) {
     const splittedValue = value.split('\n')
     const {writePath, folder, lineNumber} = getStackFileName();
     const existingSnap = await snapShotFileExists(writePath)
     const snapshot = existingSnap || {};
-    if (snapshot[lineNumber]) {
+    const key = name || lineNumber;
+    if (snapshot[key]) {
         return await validateSnapshot(splittedValue, snapshot[lineNumber]); 
     } else {
-        snapshot[lineNumber] = splittedValue;
+        snapshot[key] = splittedValue;
     }
     
     await makeFolder(folder);

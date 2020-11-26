@@ -1,15 +1,15 @@
 {
-  "10:15": [
+  "complicated": [
     " ",
     "        this is a ",
-    "        complicated cli",
+    "        \"complicated\" cli",
     "        str ing",
     "        "
   ],
   "15:15": [
     "works with 🤪"
   ],
-  "20:15": [
+  "special chars": [
     "!@#$%^&*()_-=+~"
   ]
 }

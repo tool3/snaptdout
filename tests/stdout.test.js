@@ -4,10 +4,10 @@ describe('snapshot testing', () => {
     it('should snapshot stdout', async () => {
         const stdout = ` 
         this is a 
-        complicated cli
+        "complicated" cli
         str ing
         `
-        await snap(stdout);
+        await snap(stdout, 'complicated');
     });
 
     it('should support emojis', async () => {
@@ -17,6 +17,6 @@ describe('snapshot testing', () => {
 
     it('should support special characters', async () => {
         const stdout = `!@#$%^&*()_-=+~`
-        await snap(stdout);
+        await snap(stdout, 'special chars');
     })
 });
