@@ -19,11 +19,11 @@ describe('snapshot testing', () => {
         complicated cli
         str ing
         `
-        await snap(stdout);
+        await snap(stdout, 'optional snapshot name');
     });
 });
 ```
 
 all consequential tests from this file will be compared to the snapshot.
 
-> NOTE: snaptdout saves the line and column of the running test as keys in the `.json` file - so refactoring will require recreation of the snapshots.
+> NOTE: if you do not provide a snapshot name, snaptdout will save the line and column of the running test as keys in the `.json` file - so refactoring will require recreation of the snapshots.
