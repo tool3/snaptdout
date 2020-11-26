@@ -14,4 +14,9 @@ describe('snapshot testing', () => {
         const stdout = 'works with 🤪'
         await snap(stdout);
     });
+
+    it('should support special characters', async() => {
+        const stdout = `!@#$%^&*()_-=+~`
+        await snap(stdout);
+    })
 });

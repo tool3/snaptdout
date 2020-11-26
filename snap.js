@@ -20,10 +20,19 @@ function error({expected, actual}) {
 }
 
 async function validateSnapshot(testValue, existingSnap) {
-    for (const [i, line] of existingSnap.entries()) {
-        if (line !== testValue[i]) {
-            const expected = existingSnap[i];
-            const actual = testValue[i];
+    for (const [index, line] of existingSnap.entries()) {
+        if (line !== testValue[index]) {
+            let diffString = '';
+            for (let i = 0; i < testValue[index].length; i++) {
+                if (line[i] !== testValue[index][i]) {
+                    diffString += `\x1b[1;4m${testValue[index][i]}`
+                } else {
+                    diffString += testValue[index][i]
+                }
+            }
+
+            const expected = existingSnap[index];
+            const actual = diffString
             error({expected, actual})
         }
     }
