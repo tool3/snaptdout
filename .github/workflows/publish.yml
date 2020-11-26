@@ -3,14 +3,25 @@ name: publish
 on:
   push:
     branches:
-      - release
+      - publish
 
 jobs:
-  publish:
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+        with:
+          fetch-depth: 0
+      - uses: tool3/bump@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+  publisher:
+    needs: tag
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - uses: tool3/publisher@master
+      - uses: tool3/publisher@v1
         with:
           npm_token: ${{ secrets.NPM_TOKEN }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
