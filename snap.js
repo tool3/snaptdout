@@ -87,7 +87,7 @@ async function snap(value, name) {
     const snapshot = existingSnap || {};
     const key = name || lineNumber;
     if (snapshot[key]) {
-        return await validateSnapshot(splittedValue, snapshot[lineNumber]); 
+        return await validateSnapshot(splittedValue, snapshot[key]); 
     } else {
         snapshot[key] = splittedValue;
     }
