@@ -25,9 +25,9 @@ async function validateSnapshot(testValue, existingSnap) {
             let diffString = '';
             for (let i = 0; i < testValue[index].length; i++) {
                 if (line[i] !== testValue[index][i]) {
-                    diffString += `\x1b[1;4m${testValue[index][i]}`
+                    diffString += `\x1b[31;1;4m${testValue[index][i]}`
                 } else {
-                    diffString += testValue[index][i]
+                    diffString += `\x1b[0m\x1b[31m${testValue[index][i]}`
                 }
             }
 
