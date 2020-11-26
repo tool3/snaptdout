@@ -10,7 +10,11 @@
     "type": "git",
     "url": "git+https://github.com/tool3/snaptdout.git"
   },
-  "keywords": [],
+  "keywords": [
+    "snapshot",
+    "cli",
+    "test"
+  ],
   "author": "",
   "license": "ISC",
   "bugs": {
