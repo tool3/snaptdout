@@ -55,18 +55,23 @@ function jsonify(path) {
 
 function getStackFileName() {
     const callSite = getCallSite();
-    const lineNum = callSite.getLineNumber();
-    const colNum = callSite.getColumnNumber();
+    const lineNumber = callSite.getLineNumber();
+    const columnNumber = callSite.getColumnNumber();
     const filePath = callSite.getFileName();
     
-    const lineNumber = `${lineNum}:${colNum}`;
+    return { filePath, lineNumber, columnNumber }
+}
+
+function stringifyStack({filePath, lineNumber, columnNumber}, snapConfig) {
+    const position = `${lineNumber}:${columnNumber}`;
     const fullPath = jsonify(path.resolve(filePath))
 
     const folderPath = fullPath.split('/')
     const folder = folderPath.slice(0, folderPath.length - 1).join('/');
-    const writePath = `${folder}/snapshots/${folderPath.slice(-1)[0]}`
-
-    return { writePath, folder, lineNumber };
+    const { snapshotsDir, snapshotsPrefix } = snapConfig ? snapConfig : { snapshotsDir: folder, snapshotsPrefix: ''};
+    const dir = path.resolve(snapshotsDir || folder);
+    const writePath = `${dir}/snapshots/${snapshotsPrefix}${folderPath.slice(-1)[0]}`
+    return { writePath, folder, position };
 }
 
 async function makeFolder(folder) {
@@ -80,20 +85,43 @@ async function writeJson(path, json) {
     await fs.writeFile(path, JSON.stringify(json, null, 2));
 }
 
-async function snap(value, name) {
-    const splittedValue = value.split('\n')
-    const {writePath, folder, lineNumber} = getStackFileName();
-    const existingSnap = await snapShotFileExists(writePath)
-    const snapshot = existingSnap || {};
-    const key = name || lineNumber;
-    if (snapshot[key]) {
-        return await validateSnapshot(splittedValue, snapshot[key]); 
-    } else {
-        snapshot[key] = splittedValue;
+function getSnapConfig() {
+    const userPackage = process.env.INIT_CWD ? `${process.env.INIT_CWD}/package.json` : undefined;
+    const package = userPackage ? require(userPackage) : undefined;
+    if (package && package.snaptdout) {
+        return package.snaptdout;
+    }
+}
+
+function validInput(value) {
+    if (!value) {
+        throw new Error('stdout is empty or undefined');
+    }
+
+    if (typeof value !== "string") {
+        throw new Error('value must be a string.');
     }
     
-    await makeFolder(folder);
-    await writeJson(writePath, snapshot)
+    return true;
+}
+
+async function snap(value, name) {
+    if (validInput(value)) {
+        const splittedValue = value.split('\n')
+        const snapConfig = getSnapConfig();
+        const { writePath, folder, position } = stringifyStack(getStackFileName(), snapConfig);
+        const existingSnap = await snapShotFileExists(writePath)
+        const snapshot = existingSnap || {};
+        const key = name || position;
+        if (snapshot[key]) {
+            await validateSnapshot(splittedValue, snapshot[key]); 
+        } else {
+            snapshot[key] = splittedValue;
+        }
+        
+        await makeFolder(folder);
+        await writeJson(writePath, snapshot)
+    }
 }
 
 module.exports = snap;
