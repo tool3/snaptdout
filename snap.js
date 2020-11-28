@@ -96,23 +96,24 @@ function getSnapConfig() {
 
 function validInput(value) {
     if (!value) {
-        throw new Error('stdout is empty or undefined');
+        throw new Error('value is empty or undefined');
     }
 
     if (typeof value !== "string") {
-        throw new Error('value must be a string.');
+        throw new Error('value must be a string');
     }
     
     return true;
 }
 
-async function snap(value, name) {
-    if (validInput(value)) {
-        const stdoutLines = value.split('\n');
+async function snap(stdout, name) {
+    if (validInput(stdout)) {
+        const stdoutLines = stdout.split('\n');
         const snapConfig = getSnapConfig();
         const { writePath, folder, position } = stringifyStack(getStack(), snapConfig);
         const existingSnap = await snapShotFileExists(writePath)
         const snapshot = existingSnap || {};
+
         const key = name || position;
         if (snapshot[key]) {
             await validateSnapshot(stdoutLines, snapshot[key]); 

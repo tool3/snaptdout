@@ -1,5 +1,6 @@
 const snap = require('../snap');
 const chartscii = require('chartscii')
+const assert = require('assert');
 
 describe('snapshot testing', () => {
     it('should snapshot stdout', async () => {
@@ -50,4 +51,21 @@ describe('snapshot testing', () => {
         
         await snap(stdout);
     })
+
+    it('should throw with empty input', async() => {
+        try {
+            await snap('', 'fail');
+        } catch (error) {
+            assert.strictEqual(error.message, 'value is empty or undefined');
+        }
+    });
+
+
+    it('should throw with non-string input', async() => {
+        try {
+            await snap(1234124124124, 'fail');
+        } catch (error) {
+            assert.strictEqual(error.message, 'value must be a string');
+        }
+    });
 });
