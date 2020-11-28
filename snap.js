@@ -53,7 +53,7 @@ function jsonify(path) {
     return `${file.splice(0, file.length - 1).join('.')}.json`
 }
 
-function getStackFileName() {
+function getStack() {
     const callSite = getCallSite();
     const lineNumber = callSite.getLineNumber();
     const columnNumber = callSite.getColumnNumber();
@@ -62,7 +62,8 @@ function getStackFileName() {
     return { filePath, lineNumber, columnNumber }
 }
 
-function stringifyStack({filePath, lineNumber, columnNumber}, snapConfig) {
+function stringifyStack(stack, snapConfig) {
+    const {filePath, lineNumber, columnNumber} = stack;
     const position = `${lineNumber}:${columnNumber}`;
     const fullPath = jsonify(path.resolve(filePath))
 
@@ -107,16 +108,16 @@ function validInput(value) {
 
 async function snap(value, name) {
     if (validInput(value)) {
-        const splittedValue = value.split('\n')
+        const stdoutLines = value.split('\n');
         const snapConfig = getSnapConfig();
-        const { writePath, folder, position } = stringifyStack(getStackFileName(), snapConfig);
+        const { writePath, folder, position } = stringifyStack(getStack(), snapConfig);
         const existingSnap = await snapShotFileExists(writePath)
         const snapshot = existingSnap || {};
         const key = name || position;
         if (snapshot[key]) {
-            await validateSnapshot(splittedValue, snapshot[key]); 
+            await validateSnapshot(stdoutLines, snapshot[key]); 
         } else {
-            snapshot[key] = splittedValue;
+            snapshot[key] = stdoutLines;
         }
         
         await makeFolder(folder);
