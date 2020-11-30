@@ -68,4 +68,8 @@ describe('snapshot testing', () => {
             assert.strictEqual(error.message, 'value must be a string');
         }
     });
+
+    it('should support colored output', async() => { 
+        await snap(`\x1b[31mhello this is red\x1b[0m\n\x1b[32mthis is yellow\x1b[0m`, 'colors');
+    });
 });

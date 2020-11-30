@@ -1,5 +1,6 @@
 const fs = require('fs').promises;
-const path = require('path')
+const path = require('path');
+const { string } = require('yargs');
 
 async function exists(path) {
     try {
@@ -20,22 +21,27 @@ function error({expected, actual}) {
 }
 
 async function validateSnapshot(testValue, existingSnap) {
-    for (const [index, line] of existingSnap.entries()) {
+    existingSnap.forEach((line, index) => {
         if (line !== testValue[index]) {
             let diffString = '';
             for (let i = 0; i < testValue[index].length; i++) {
+
+                const regex = new RegExp(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g);
+                testValue[index] = testValue[index].replace(regex, '');
+                line = line.replace(regex, '');
+
                 if (line[i] !== testValue[index][i]) {
                     diffString += `\x1b[31;1;4m${testValue[index][i]}`
                 } else {
-                    diffString += `\x1b[0m\x1b[31m${testValue[index][i]}`
+                    diffString += `\x1b[31m${testValue[index][i]}`
                 }
             }
-
+            
             const expected = existingSnap[index];
             const actual = diffString
             error({expected, actual})
         }
-    }
+    });
 }
 
 function getCallSite() {
