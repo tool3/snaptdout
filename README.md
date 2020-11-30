@@ -30,7 +30,7 @@ all consequential tests from this file will be compared to the snapshot.
 > if you do not provide a snapshot name, snaptdout will save the line and column of the running test as keys in the `.json` file.
 
 # config 
-you can provide an optional snapshot directory through your package.json like so:
+you can provide an optional snapshot directory through your `package.json` like so:
 
 ```json
 ...
