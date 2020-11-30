@@ -1,6 +1,13 @@
 const fs = require('fs').promises;
 const path = require('path');
-const { string } = require('yargs');
+
+const colors = {
+    green: '\x1b[32m',
+    red: '\x1b[31m',
+    reset: '\x1b[0m',
+    red_underlined: '\x1b[31;4m',
+    green_underlined: '\x1b[32;4m'
+}
 
 async function exists(path) {
     try {
@@ -14,32 +21,37 @@ async function snapShotFileExists(path) {
     return await exists(path) ? require(path) : false;
 }
 
-function error({expected, actual}) {
-    const errString = `${' '.repeat(6)}\x1b[32mexpect: ${expected}\x1b[0m\n${' '.repeat(6)}\x1b[31mactual: ${actual}\x1b[0m`
-    const errorMessage = `snapshots don't match!\n${errString}`
-    throw new Error(errorMessage)
+function indentResult(msg, color, repeat) {
+    return `${colors.reset}\n${repeat ? ' '.repeat(repeat) : ''}${colorize(msg, color)}`;
+}
+
+function colorize(msg, color) {
+    return `${colors.reset}${color}${msg}${colors.reset}`;
+}
+
+function error({expect, actual}) {
+    const expectString = indentResult(`expect: ${expect}`, colors.green, 6);
+    const actualString = indentResult(`actual: ${actual}`, colors.red, 6);
+    const errorMessage = `snapshots don't match!\n${expectString + actualString}`;
+    throw new Error(errorMessage);
 }
 
 async function validateSnapshot(testValue, existingSnap) {
     existingSnap.forEach((line, index) => {
         if (line !== testValue[index]) {
-            let diffString = '';
+            let actual = '';
+            let expect = '';
             for (let i = 0; i < testValue[index].length; i++) {
-
-                const regex = new RegExp(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g);
-                testValue[index] = testValue[index].replace(regex, '');
-                line = line.replace(regex, '');
-
                 if (line[i] !== testValue[index][i]) {
-                    diffString += `\x1b[31;1;4m${testValue[index][i]}`
+                    actual += colorize(testValue[index][i], colors.red_underlined);
+                    expect += colorize(line[i], colors.green_underlined);
                 } else {
-                    diffString += `\x1b[31m${testValue[index][i]}`
+                    actual += colorize(testValue[index][i], colors.red);
+                    expect += colorize(line[i], colors.green);
                 }
             }
-            
-            const expected = existingSnap[index];
-            const actual = diffString
-            error({expected, actual})
+        
+            error({expect, actual})
         }
     });
 }
@@ -114,7 +126,7 @@ function validInput(value) {
 
 async function snap(stdout, name) {
     if (validInput(stdout)) {
-        const stdoutLines = stdout.split('\n');
+        let stdoutLines = stdout.split('\n');
         const snapConfig = getSnapConfig();
         const { writePath, folder, position } = stringifyStack(getStack(), snapConfig);
         const existingSnap = await snapShotFileExists(writePath)

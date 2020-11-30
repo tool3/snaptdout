@@ -69,7 +69,7 @@ describe('snapshot testing', () => {
         }
     });
 
-    it('should support colored output', async() => { 
+    it('should support ansi output', async() => { 
         await snap(`\x1b[31mhello this is red\x1b[0m\n\x1b[32mthis is yellow\x1b[0m`, 'colors');
     });
 });
