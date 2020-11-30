@@ -21,8 +21,8 @@ async function snapShotFileExists(path) {
     return await exists(path) ? require(path) : false;
 }
 
-function indentResult(msg, color, repeat) {
-    return `${colors.reset}\n${repeat ? ' '.repeat(repeat) : ''}${colorize(msg, color)}`;
+function indentResult({msg, color, indent}) {
+    return `${colors.reset}\n${indent ? ' '.repeat(indent) : ''}${colorize(msg, color)}`;
 }
 
 function colorize(msg, color) {
@@ -30,8 +30,8 @@ function colorize(msg, color) {
 }
 
 function error({expect, actual}) {
-    const expectString = indentResult(`expect: ${expect}`, colors.green, 6);
-    const actualString = indentResult(`actual: ${actual}`, colors.red, 6);
+    const expectString = indentResult({msg: `expect: ${expect}`, color: colors.green, indent: 6});
+    const actualString = indentResult({msg: `actual: ${actual}`, color: colors.red, indent: 6});
     const errorMessage = `snapshots don't match!\n${expectString + actualString}`;
     throw new Error(errorMessage);
 }
