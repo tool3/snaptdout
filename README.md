@@ -26,8 +26,8 @@ describe('snapshot testing', () => {
 
 all consequential tests from this file will be compared to the snapshot.
 
-### default
-if you do not provide a snapshot name, snaptdout will save the line and column of the running test as keys in the `.json` file - so refactoring will require recreation of the snapshots.
+> while snapshot name is optional, it is highly recommended.   
+> if you do not provide a snapshot name, snaptdout will save the line and column of the running test as keys in the `.json` file.
 
 # config 
 you can provide an optional snapshot directory through your package.json like so:
@@ -40,13 +40,13 @@ you can provide an optional snapshot directory through your package.json like so
 ...
 ```
 
-##  `snapshotDir`
+##  `snapshotsDir`
 snapshots directory.   
 under this directory all snapshots files will be saved.
 
 > default: test file location.
 
-##  `snapshotPrefix`
+##  `snapshotsPrefix`
 snapshots file prefix.   
 
 > default: ''.
