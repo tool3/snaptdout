@@ -1,7 +1,7 @@
 {
   "name": "@applitools/snaptdout",
   "version": "1.5.2",
-  "description": "",
+  "description": "simple stdout snaptshot testing",
   "main": "snap.js",
   "scripts": {
     "test": "mocha tests/"
@@ -11,9 +11,9 @@
     "url": "git+https://github.com/applitools/snaptdout.git"
   },
   "keywords": [
-    "snapshot",
+    "snapshot-testing",
     "cli",
-    "test"
+    "tests"
   ],
   "author": "",
   "license": "ISC",
@@ -24,9 +24,5 @@
   "devDependencies": {
     "chartscii": "^1.2.3",
     "mocha": "^8.2.1"
-  },
-  "snaptdout": {
-    "snapshotsPrefix": "",
-    "snapshotsDir": ""
   }
 }
