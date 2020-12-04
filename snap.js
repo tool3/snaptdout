@@ -46,7 +46,8 @@ async function validateSnapshot(testValue, existingSnap, ignoreAnsi) {
         if (snapLine !== testLine) {
             let actual = '';
             let expect = '';
-            for (let i = 0; i < testLine.length; i++) {
+            const length = testLine.length > snapLine.length ? snapLine.length : testLine.length;
+            for (let i = 0; i < length; i++) {
                 if (snapLine[i] !== testLine[i]) {
                     actual += colorize(testLine[i], colors.red_underlined);
                     expect += colorize(snapLine[i], colors.green_underlined);
@@ -143,7 +144,7 @@ async function snap(stdout, name) {
             await validateSnapshot(stdoutLines, snapshot[key], ignore); 
         } else {
             if (snapConfig && snapConfig.ignoreAnsi) {
-                stdoutLines.forEach(line => line = line.replace(STRIP_REGEX, ''))
+                stdoutLines = stdoutLines.map(line => line.replace(STRIP_REGEX, ''))
             }
             snapshot[key] = stdoutLines;
         }
