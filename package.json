@@ -1,6 +1,6 @@
 {
   "name": "@applitools/snaptdout",
-  "version": "1.5.2",
+  "version": "1.5.4",
   "description": "simple stdout snaptshot testing",
   "main": "snap.js",
   "scripts": {
