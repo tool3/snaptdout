@@ -38,19 +38,21 @@ function error({expect, actual}) {
     throw new Error(errorMessage);
 }
 
-async function validateSnapshot(testValue, existingSnap) {
+async function validateSnapshot(testValue, existingSnap, ignoreAnsi) {
     existingSnap.forEach((line, index) => {
-        const testLine = testValue[index];
-        if (line !== testLine) {
+        const testLine = ignoreAnsi ? testValue[index].replace(STRIP_REGEX, ''): testValue[index];
+        const snapLine = ignoreAnsi ? line.replace(STRIP_REGEX, '') : line;
+
+        if (snapLine !== testLine) {
             let actual = '';
             let expect = '';
             for (let i = 0; i < testLine.length; i++) {
-                if (line[i] !== testLine[i]) {
+                if (snapLine[i] !== testLine[i]) {
                     actual += colorize(testLine[i], colors.red_underlined);
-                    expect += colorize(line[i], colors.green_underlined);
+                    expect += colorize(snapLine[i], colors.green_underlined);
                 } else {
                     actual += colorize(testLine[i], colors.red);
-                    expect += colorize(line[i], colors.green);
+                    expect += colorize(snapLine[i], colors.green);
                 }
             }
         
@@ -137,7 +139,8 @@ async function snap(stdout, name) {
 
         const key = name || position;
         if (snapshot[key]) {
-            await validateSnapshot(stdoutLines, snapshot[key]); 
+            const ignore = snapConfig ? !!snapConfig.ignoreAnsi: false;
+            await validateSnapshot(stdoutLines, snapshot[key], ignore); 
         } else {
             if (snapConfig && snapConfig.ignoreAnsi) {
                 stdoutLines.forEach(line => line = line.replace(STRIP_REGEX, ''))

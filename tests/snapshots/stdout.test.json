@@ -48,5 +48,8 @@
   "colors": [
     "\u001b[31mhello this is red\u001b[0m",
     "\u001b[32mthis is yellow\u001b[0m"
+  ],
+  "ignore_diffs": [
+    "\u001b[31mhello this is red\u001b[0m"
   ]
 }
