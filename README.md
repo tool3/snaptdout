@@ -3,7 +3,7 @@
 simple stdout snapshot testing
 
 # install
-`npm i -D snaptdout`
+`npm i -D @applitools/snaptdout`
 
 # how does it work ?
 snaptdout saves a copy of stdout to a `.json` file equivalent to the test file name, which should be committed to git.
