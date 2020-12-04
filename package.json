@@ -1,5 +1,5 @@
 {
-  "name": "snaptdout",
+  "name": "@applitools/snaptdout",
   "version": "1.4.1",
   "description": "",
   "main": "snap.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tool3/snaptdout.git"
+    "url": "git+https://github.com/applitools/snaptdout.git"
   },
   "keywords": [
     "snapshot",
@@ -18,9 +18,9 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/tool3/snaptdout/issues"
+    "url": "https://github.com/applitools/snaptdout/issues"
   },
-  "homepage": "https://github.com/tool3/snaptdout#readme",
+  "homepage": "https://github.com/applitools/snaptdout#readme",
   "devDependencies": {
     "chartscii": "^1.2.3",
     "mocha": "^8.2.1"
