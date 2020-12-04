@@ -1,6 +1,8 @@
 const fs = require('fs').promises;
 const path = require('path');
 
+const STRIP_REGEX = new RegExp(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g);
+
 const colors = {
     green: '\x1b[32m',
     red: '\x1b[31m',
@@ -38,15 +40,16 @@ function error({expect, actual}) {
 
 async function validateSnapshot(testValue, existingSnap) {
     existingSnap.forEach((line, index) => {
-        if (line !== testValue[index]) {
+        const testLine = testValue[index];
+        if (line !== testLine) {
             let actual = '';
             let expect = '';
-            for (let i = 0; i < testValue[index].length; i++) {
-                if (line[i] !== testValue[index][i]) {
-                    actual += colorize(testValue[index][i], colors.red_underlined);
+            for (let i = 0; i < testLine.length; i++) {
+                if (line[i] !== testLine[i]) {
+                    actual += colorize(testLine[i], colors.red_underlined);
                     expect += colorize(line[i], colors.green_underlined);
                 } else {
-                    actual += colorize(testValue[index][i], colors.red);
+                    actual += colorize(testLine[i], colors.red);
                     expect += colorize(line[i], colors.green);
                 }
             }
@@ -136,6 +139,9 @@ async function snap(stdout, name) {
         if (snapshot[key]) {
             await validateSnapshot(stdoutLines, snapshot[key]); 
         } else {
+            if (snapConfig && snapConfig.ignoreAnsi) {
+                stdoutLines.forEach(line => line = line.replace(STRIP_REGEX, ''))
+            }
             snapshot[key] = stdoutLines;
         }
         
