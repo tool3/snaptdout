@@ -79,7 +79,7 @@ yargs cli test example:
 ```javascript
 const {exec} = require('child_process');
 const execute = require('util').promisify(exec);
-const snap = require('snaptdout');
+const snap = require('@applitools/snaptdout');
 
 describe(('help test') => {
     it('should show the correct help text', async () => {
