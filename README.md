@@ -30,7 +30,7 @@ all consequential tests from this file will be compared to the snapshot.
 > if you do not provide a snapshot name, snaptdout will save the line and column of the running test as keys in the `.json` file.
 
 # config 
-you can provide an optional snapshot directory through your `package.json` like so:
+you can provide config through your `package.json` like so:
 
 ```json
 ...
@@ -65,7 +65,7 @@ if set to `true` - `snaptdout` will save the raw string without formatting and u
 you can simply `require` / `import` `snaptdout` and use it out of the box.
 
 ## simple.
-`snaptdout` uses simple `.json` files to store the string we refer to as `snapshot`.   
+`snaptdout` uses simple `.json` files to store the string we refer to as a `snapshot`.   
 no binaries. nothing fancy.
 
 ## great diffs
