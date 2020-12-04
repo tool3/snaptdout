@@ -1,6 +1,6 @@
 {
   "name": "@applitools/snaptdout",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "description": "",
   "main": "snap.js",
   "scripts": {
