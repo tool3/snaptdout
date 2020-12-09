@@ -15,7 +15,7 @@
     "cli",
     "tests"
   ],
-  "author": "",
+  "author": "tal.hayut@applitools.com",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/applitools/snaptdout/issues"
