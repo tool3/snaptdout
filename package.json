@@ -6,21 +6,24 @@
   "scripts": {
     "test": "mocha tests/"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/applitools/snaptdout.git"
-  },
   "keywords": [
     "snapshot-testing",
     "cli",
     "tests"
   ],
-  "author": "tal.hayut@applitools.com",
-  "license": "ISC",
+  "license": "SEE LICENSE IN LICENSE",
+  "homepage": "https://applitools.com",
+  "author": {
+    "name": "Applitools Team",
+    "email": "team@applitools.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:applitools/snaptdout.git"
+  },
   "bugs": {
     "url": "https://github.com/applitools/snaptdout/issues"
   },
-  "homepage": "https://github.com/applitools/snaptdout#readme",
   "devDependencies": {
     "chartscii": "^1.2.3",
     "mocha": "^8.2.1"
