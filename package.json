@@ -27,5 +27,9 @@
   "devDependencies": {
     "chartscii": "^1.2.3",
     "mocha": "^8.2.1"
+  },
+  "dependencies": {
+    "puppeteer": "^5.5.0",
+    "xterm": "^4.9.0"
   }
 }

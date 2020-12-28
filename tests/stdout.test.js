@@ -1,6 +1,7 @@
 const snap = require('../snap');
 const chartscii = require('chartscii')
 const assert = require('assert');
+const { exec } = require('child_process');
 
 describe('snapshot testing', () => {
     it('should snapshot stdout', async () => {
@@ -12,7 +13,7 @@ describe('snapshot testing', () => {
         await snap(stdout, 'complicated');
     });
 
-    it('should support emojis', async () => {
+    it('should support no snapshot name', async () => {
         const stdout = 'works with 🤪'
         await snap(stdout);
     });
@@ -32,7 +33,8 @@ describe('snapshot testing', () => {
         const chart = new chartscii(data, {
             width: 200,
             sort: true,
-            reverse: true
+            reverse: true,
+            color: 'red'
         });
 
         const stdout = chart.create();
