@@ -1,35 +1,32 @@
 {
-  "name": "@applitools/snaptdout",
-  "version": "1.5.4",
+  "name": "snaptdout",
+  "version": "1.0.0",
   "description": "simple stdout snaptshot testing",
-  "main": "snap.js",
+  "main": "index.js",
   "scripts": {
-    "test": "mocha tests/"
+    "test": "mocha tests/",
+    "print": "node -e 'Object.values(require(`./tests/snapshots/stdout.test.json`)).forEach(i => console.log(i.join(`\n`)))'"
   },
   "keywords": [
     "snapshot-testing",
     "cli",
     "tests"
   ],
-  "license": "SEE LICENSE IN LICENSE",
-  "homepage": "https://applitools.com",
+  "license": "MIT",
   "author": {
-    "name": "Applitools Team",
-    "email": "team@applitools.com"
+    "name": "Tal Hayut",
+    "email": "talhayut.dev@gmail.com"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:applitools/snaptdout.git"
+    "url": "git@github.com:tool3/snaptdout.git"
   },
   "bugs": {
-    "url": "https://github.com/applitools/snaptdout/issues"
+    "url": "https://github.com/tool3/snaptdout/issues"
   },
   "devDependencies": {
-    "chartscii": "^1.2.3",
-    "mocha": "^8.2.1"
+    "mocha": "^8.3.2"
   },
   "dependencies": {
-    "puppeteer": "^5.5.0",
-    "xterm": "^4.9.0"
   }
 }

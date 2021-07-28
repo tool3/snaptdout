@@ -1,7 +1,5 @@
-const snap = require('../snap');
-const chartscii = require('chartscii')
+const snap = require('../');
 const assert = require('assert');
-const { exec } = require('child_process');
 
 describe('snapshot testing', () => {
     it('should snapshot stdout', async () => {
@@ -21,25 +19,7 @@ describe('snapshot testing', () => {
     it('should support special characters', async () => {
         const stdout = `!@#$%^&*()_-=+~`
         await snap(stdout, 'special chars');
-    })
-
-    it('should support fancy examples', async () => {
-        const data = [];
-
-        for (let i = 1; i <= 20; i++) {
-            data.push(i);
-        }
-
-        const chart = new chartscii(data, {
-            width: 200,
-            sort: true,
-            reverse: true,
-            color: 'red'
-        });
-
-        const stdout = chart.create();
-        await snap(stdout);
-    })
+    });
 
     it('should support delicate strings', async () => {
         const stdout = `
@@ -62,7 +42,6 @@ describe('snapshot testing', () => {
         }
     });
 
-
     it('should throw with non-string input', async() => {
         try {
             await snap(1234124124124, 'fail');
@@ -73,5 +52,9 @@ describe('snapshot testing', () => {
 
     it('should support ansi output', async() => { 
         await snap(`\x1b[31mhello this is red\x1b[0m\n\x1b[32mthis is yellow\x1b[0m`, 'colors');
+    });
+
+    it('should support custom config', async() => { 
+        await snap(`\x1b[31mhello this is red\x1b[0m\n\x1b[32mthis is yellow\x1b[0m`, 'custom config', {ignoreAnsi: true});
     });
 });

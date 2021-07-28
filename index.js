@@ -130,10 +130,10 @@ function validInput(value) {
     return true;
 }
 
-async function snap(stdout, name) {
+async function snap(stdout, name, config) {
     if (validInput(stdout)) {
         let stdoutLines = stdout.split('\n');
-        const snapConfig = getSnapConfig();
+        const snapConfig = config || getSnapConfig();
         const { writePath, folder, position } = stringifyStack(getStack(), snapConfig);
         const existingSnap = await snapShotFileExists(writePath)
         const snapshot = existingSnap || {};
