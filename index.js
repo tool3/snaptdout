@@ -31,10 +31,12 @@ function colorize(msg, color) {
     return `${colors.reset}${color}${msg}${colors.reset}`;
 }
 
-function error({ expect, actual }) {
+function error({ expect, actual, testLine, snapLine }) {
     const expectString = indentResult({ msg: `expect: ${expect}`, color: colors.green, indent: 6 });
     const actualString = indentResult({ msg: `actual: ${actual}`, color: colors.red, indent: 6 });
-    const errorMessage = `snapshots don't match!\n${expectString}\n${actualString}`;
+    const expectedFormatted = `      ${testLine}`;
+    const actualFormatted = `      ${snapLine}`
+    const errorMessage = `snapshots don't match!\n${expectString}\n${actualString}\n${expectedFormatted}\n${actualFormatted}`;
     throw new Error(errorMessage);
 }
 
@@ -57,7 +59,7 @@ async function validateSnapshot(testValue, existingSnap, ignoreAnsi) {
                 }
             }
 
-            error({ expect, actual })
+            error({ expect, actual, testLine, snapLine })
         }
     });
 }
