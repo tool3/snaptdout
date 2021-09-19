@@ -32,11 +32,11 @@ function colorize(msg, color) {
 }
 
 function error({ expect, actual, testLine, snapLine }) {
-    const expectString = indentResult({ msg: `expect: ${expect}`, color: colors.green, indent: 6 });
-    const actualString = indentResult({ msg: `actual: ${actual}`, color: colors.red, indent: 6 });
-    const expectedFormatted = `      ${testLine}`;
-    const actualFormatted = `      ${snapLine}`
-    const errorMessage = `snapshots don't match!\n${expectString}\n${actualString}\n${expectedFormatted}\n${actualFormatted}`;
+    const expectString = indentResult({ msg: `EXPECTED\n      ${expect}`, color: colors.green, indent: 6 });
+    const actualString = indentResult({ msg: `ACTUAL\n      ${actual}`, color: colors.red, indent: 6 });
+    const actualFormatted = `      ${testLine}`;
+    const expectedFormatted = `      ${snapLine}`
+    const errorMessage = `SNAPSHOTS DON'T MATCH!\n${expectString}\n${expectedFormatted}\n\n${actualString}\n${actualFormatted}`;
     throw new Error(errorMessage);
 }
 
