@@ -5,7 +5,9 @@ const STRIP_REGEX = new RegExp(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,
 
 const colors = {
     green: '\x1b[32m',
+    green_bold: '\x1b[32;1m',
     red: '\x1b[31m',
+    red_bold: '\x1b[31;1m',
     reset: '\x1b[0m',
     red_underlined: '\x1b[31;4m',
     green_underlined: '\x1b[32;4m'
@@ -31,13 +33,22 @@ function colorize(msg, color) {
     return `${colors.reset}${color}${msg}${colors.reset}`;
 }
 
+class SnapshotsNoMatchError extends Error {
+    constructor(message) {
+        super(message);
+        this.name = colors.red_bold + `SNAPSHOTS DON'T MATCH`
+        this.message = message;
+    }
+}
+
 function error({ expect, actual, testLine, snapLine }) {
-    const expectString = indentResult({ msg: `EXPECTED\n      ${expect}`, color: colors.green, indent: 6 });
-    const actualString = indentResult({ msg: `ACTUAL\n      ${actual}`, color: colors.red, indent: 6 });
-    const actualFormatted = `      ${testLine}`;
-    const expectedFormatted = `      ${snapLine}`
-    const errorMessage = `SNAPSHOTS DON'T MATCH!\n${expectString}\n${expectedFormatted}\n\n${actualString}\n${actualFormatted}`;
-    throw new Error(errorMessage);
+    const defaultIndent = ' '.repeat(6)
+    const expectString = indentResult({ msg: `EXPECTED\n${defaultIndent}${expect}`, color: colors.green, indent: 6 });
+    const actualString = indentResult({ msg: `ACTUAL\n${defaultIndent}${actual}`, color: colors.red, indent: 6 });
+    const actualFormatted = `${defaultIndent}${testLine}`;
+    const expectedFormatted = `${defaultIndent}${snapLine}`
+    const errorMessage = `\n${expectString}\n${expectedFormatted}\n\n${actualString}\n${actualFormatted}`;
+    throw new SnapshotsNoMatchError(errorMessage);
 }
 
 async function validateSnapshot(testValue, existingSnap, ignoreAnsi) {
