@@ -13,6 +13,7 @@
     "tests"
   ],
   "license": "MIT",
+  "types": "index.d.ts",
   "author": {
     "name": "Tal Hayut",
     "email": "talhayut.dev@gmail.com"
@@ -25,7 +26,7 @@
     "url": "https://github.com/tool3/snaptdout/issues"
   },
   "devDependencies": {
-    "mocha": "^8.3.2"
+    "mocha": "^9.1.1"
   },
   "dependencies": {}
 }

@@ -26,12 +26,11 @@
     "\u001b[31mhello this is red\u001b[0m",
     "\u001b[32mthis is yellow\u001b[0m"
   ],
-  "colors_2": [
-    "hello this is red",
-    "this is yellow"
-  ],
   "custom config": [
     "hello this is red",
     "this is yellow"
+  ],
+  "config": [
+    "\u001b[32;7mHELLO\u001b[0m"
   ]
 }

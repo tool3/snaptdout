@@ -1,7 +1,10 @@
-declare type Config = {
+declare type SnapConfig = {
   name?: string;
   snapshotsDir?: string;
   ignoreAnsi?: boolean;
+  formattedOutput?: boolean;
 }
 
-export default function snap(stdout: string, name?: string, config?: Config): Promise<void>;
+declare function snap(stdout: string, name?: string, config?: SnapConfig): Promise<void>
+
+export = snap 

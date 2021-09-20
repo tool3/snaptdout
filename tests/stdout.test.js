@@ -57,4 +57,8 @@ describe('snapshot testing', () => {
     it('should support custom config', async() => { 
         await snap(`\x1b[31mhello this is red\x1b[0m\n\x1b[32mthis is yellow\x1b[0m`, 'custom config', {ignoreAnsi: true});
     });
+
+    it('should override global config', async () => {
+        await snap('\x1b[32;7mHELLO\x1b[0m', 'config', {formattedOutput: false})
+    });
 });

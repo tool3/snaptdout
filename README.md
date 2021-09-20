@@ -1,9 +1,8 @@
 # snaptdout
-[![](https://github.com/applitools/snaptdout/workflows/test/badge.svg?branch=master)](https://github.com/applitools/snaptdout/actions?query=workflow:test)    
-simple stdout snapshot testing
+snaptdout is a lightweight, simple stdout snapshot testing with great diffs
 
 # install
-`npm i -D @applitools/snaptdout`
+`npm i -D snaptdout`
 
 # how does it work ?
 snaptdout saves a copy of stdout to a `.json` file equivalent to the test file name, which should be committed to git.
@@ -30,7 +29,7 @@ all consequential tests from this file will be compared to the snapshot.
 > if you do not provide a snapshot name, snaptdout will save the line and column of the running test as keys in the `.json` file.
 
 # config 
-you can provide config through your `package.json` like so:
+you can provide config through your `package.json`, like so:
 
 ```json
 ...
@@ -38,6 +37,13 @@ you can provide config through your `package.json` like so:
     "snapshotsDir": "relative/to/root/project/directory"
 }
 ...
+```
+
+you can also provide the config as a third paremeter.
+snapshot specific config overrides any global config.
+```javascript
+const stdout = '\x1b[32;7mHEY THERE\x1[0m';
+await snap(stdout, 'hey', {ignoreAnsi: true});
 ```
 
 ##  `snapshotsDir`
@@ -57,6 +63,11 @@ if set to `true` - `snaptdout` will save the raw string without formatting and u
 
 > default: false.
 
+##  `formattedOutput`
+show formatted output after error message.   
+
+> default: true.
+
 # features
 ## lightweight
 `snaptdout` has no dependencies, and a minimal footprint.
@@ -70,16 +81,17 @@ no binaries. nothing fancy.
 
 ## great diffs
 when output based tests break, you need to know **exactly** where.   
+[![](https://img.shields.io/static/v1?label=created%20with%20shellfie&message=📸&color=pink)](https://github.com/tool3/shellfie)   
 
-![](./img/great_diff.png)
+![](./img/error.png)
 
 # examples
-yargs cli test example:
+yargs cli test example
 
 ```javascript
 const {exec} = require('child_process');
 const execute = require('util').promisify(exec);
-const snap = require('@applitools/snaptdout');
+const snap = require('snaptdout');
 
 describe(('help test') => {
     it('should show the correct help text', async () => {
@@ -88,3 +100,5 @@ describe(('help test') => {
     });
 });
 ```
+
+ignore ansi characters for specific test
