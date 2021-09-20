@@ -1,6 +1,6 @@
 {
   "name": "snaptdout",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "simple stdout snaptshot testing",
   "main": "index.js",
   "scripts": {
@@ -31,6 +31,5 @@
   },
   "devDependencies": {
     "mocha": "^9.1.1"
-  },
-  "dependencies": {}
+  }
 }
