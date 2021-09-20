@@ -87,7 +87,6 @@ when output based tests break, you need to know **exactly** where.
 
 # examples
 yargs cli test example
-
 ```javascript
 const {exec} = require('child_process');
 const execute = require('util').promisify(exec);
@@ -102,3 +101,7 @@ describe(('help test') => {
 ```
 
 ignore ansi characters for specific test
+only tests for text and spacing
+```javascript
+await snap('randomly formatted string', 'snapshot name', {ignoreAnsi: true});
+```
