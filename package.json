@@ -7,6 +7,10 @@
     "test": "mocha tests/",
     "print": "node -e 'Object.values(require(`./tests/snapshots/stdout.test.json`)).forEach(i => console.log(i.join(`\n`)))'"
   },
+  "files": [
+    "index.js",
+    "index.d.ts"
+  ],
   "keywords": [
     "snapshot-testing",
     "cli",
