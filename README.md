@@ -1,5 +1,4 @@
-# snaptdout
-snaptdout is a lightweight, simple stdout snapshot testing with great diffs
+<img src="./shellfies/logo.png" />   
 
 # install
 `npm i -D snaptdout`
